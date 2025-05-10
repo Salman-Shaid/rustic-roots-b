@@ -199,59 +199,53 @@ async function run() {
       }
     });
 
-    // Get all foods
-    // Get all foods or filter by name or email
     // Get all foods or filter by name or email and sort
-app.get('/foods', async (req, res) => {
-  const { name, email, sort } = req.query;
+    app.get('/foods', async (req, res) => {
+      const { name, email, sort } = req.query;
 
-  let query = {};
-  let sortOptions = {};
+      let query = {};
+      let sortOptions = {};
 
-  // Filter by food name
-  if (name) {
-    query.foodName = { $regex: name, $options: 'i' };
-  }
+      // Filter by food name
+      if (name) {
+        query.foodName = { $regex: name, $options: 'i' };
+      }
 
-  // Filter by email
-  if (email) {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!emailRegex.test(email)) {
-      return res.status(400).json({ message: 'Invalid email format' });
-    }
-    query.addedByEmail = email;
-  }
+      // Filter by email
+      if (email) {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailRegex.test(email)) {
+          return res.status(400).json({ message: 'Invalid email format' });
+        }
+        query.addedByEmail = email;
+      }
 
-  // Sorting
-  if (sort === 'asc') {
-    sortOptions = { price: 1 };
-  } else if (sort === 'desc') {
-    sortOptions = { price: -1 };
-  }
+      // Sorting
+      if (sort === 'asc') {
+        sortOptions = { price: 1 };
+      } else if (sort === 'desc') {
+        sortOptions = { price: -1 };
+      }
 
-  console.log('Sort received:', sort);
-  console.log('Sort options being applied:', sortOptions);
+      console.log('Sort received:', sort);
+      console.log('Sort options being applied:', sortOptions);
 
-  try {
-    const foods = await foodCollection
-      .find(query)
-      .sort(Object.keys(sortOptions).length ? sortOptions : {})
-      .toArray();
+      try {
+        const foods = await foodCollection
+          .find(query)
+          .sort(Object.keys(sortOptions).length ? sortOptions : {})
+          .toArray();
 
-    if (foods.length === 0) {
-      return res.status(404).json({ message: 'No foods found' });
-    }
+        if (foods.length === 0) {
+          return res.status(404).json({ message: 'No foods found' });
+        }
 
-    res.json(foods);
-  } catch (err) {
-    console.error('Error fetching foods:', err);
-    res.status(500).json({ message: 'Error fetching foods' });
-  }
-});
-
-
-
-
+        res.json(foods);
+      } catch (err) {
+        console.error('Error fetching foods:', err);
+        res.status(500).json({ message: 'Error fetching foods' });
+      }
+    });
 
 
     // Add new food item
