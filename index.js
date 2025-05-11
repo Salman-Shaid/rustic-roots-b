@@ -25,7 +25,7 @@ async function run() {
 
     const foodCollection = client.db("foodDB").collection('foods');
     const orderCollection = client.db("foodDB").collection('food_order');
-
+    const reviewCollection = client.db("foodDB").collection('reviews');
     // Delete an order by ID
     app.delete('/food-order/:orderId', async (req, res) => {
       const { orderId } = req.params;
@@ -42,6 +42,41 @@ async function run() {
         res.status(500).json({ message: 'Error deleting order' });
       }
     });
+
+
+    // reviews save in the database
+    app.post('/reviews', async (req, res) => {
+      const { name, email, review, avatar, date } = req.body;
+      const newReview = { name, email, review, avatar, date };
+
+      try {
+        const result = await reviewCollection.insertOne(newReview);
+        // Return the inserted document as the response
+        res.status(201).json({ ...newReview, _id: result.insertedId });
+      } catch (error) {
+        console.error('Error saving review:', error);
+        res.status(500).json({ message: 'Failed to save review' });
+      }
+    });
+
+    app.get('/reviews', async (req, res) => {
+      try {
+        // Fetch all reviews from the database
+        const reviews = await reviewCollection.find({}).toArray();
+
+        // Return the reviews
+        res.status(200).json(reviews);
+      } catch (error) {
+        console.error('Error fetching reviews:', error);
+        res.status(500).json({ message: 'Failed to fetch reviews' });
+      }
+    });
+
+
+
+
+
+
 
     // Fetch orders for a specific email
     app.get('/food-order', async (req, res) => {
