@@ -1,4 +1,4 @@
-# Restaurant Management Server
+# 🍽️ Rustic Roots – Backend 
 
 This is the server-side application for the **Rustic Roots** restaurant management system. The application is built using Node.js, Express, MongoDB.
 
@@ -6,10 +6,13 @@ This is the server-side application for the **Rustic Roots** restaurant manageme
 
 ## Features
 
-- **User Authentication**:
-  - Login with email and password.
-  - JWT-based authentication.
-  - Secure cookies for storing tokens.
+- ## 📦 Features
+
+-  User Authentication (JWT / Firebase compatible)
+-  CRUD operations for Food Items
+-  Order Management (by user)
+-  Role-based access: Customer, Admin, Deliveryman
+- 🛡️ Secure endpoints with middleware
 
 - **Food Management**:
   - Add, update, and delete food items.
@@ -26,11 +29,14 @@ This is the server-side application for the **Rustic Roots** restaurant manageme
 
 ---
 
-## Tech Stack
+## 🛠️ Tech Stack
 
-- **Backend**: Node.js, Express.js
-- **Database**: MongoDB
-- **Authentication**: JWT (JSON Web Tokens)
-- **Environment Management**: `dotenv`
-
+- **Node.js**
+- **Express.js**
+- **MongoDB**
+- **Mongoose**
+- **Cors**
+- **Dotenv**
+- **Firebase 
+- **JWT** 
 
