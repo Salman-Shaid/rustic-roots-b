@@ -239,7 +239,6 @@ async function run() {
       let query = {};
       let sortOptions = {};
 
-      // Filter by food name
       if (name) {
         query.foodName = { $regex: name, $options: 'i' };
       }
@@ -321,7 +320,6 @@ async function run() {
 
 
     // top selling
-
     app.get('/top-selling-foods', async (req, res) => {
       try {
         const topSellingFoods = await foodCollection
